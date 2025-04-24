@@ -1,0 +1,164 @@
+abstract class ThreeDObject {
+    protected double dim1, dim2, dim3;
+
+    public ThreeDObject(double dim1, double dim2, double dim3) {
+        this.dim1 = dim1;
+        this.dim2 = dim2;
+        this.dim3 = dim3;
+    }
+
+    public abstract double wholesurfacearea();
+    public abstract double volume();
+}
+class Box extends ThreeDObject {
+
+    public Box(double length, double width, double height) {
+        super(length, width, height);
+    }
+     public double wholesurfacearea() {
+        return 2 * (dim1 * dim2 + dim2 * dim3 + dim1 * dim3);
+    }
+public double volume() {
+        return dim1 * dim2 * dim3;
+    }
+}
+class Cube extends ThreeDObject {
+public Cube(double side) {
+        super(side, side, side);
+    }
+
+    public double wholesurfacearea() {
+        return 6 * dim1 * dim1;
+    }
+
+    public double volume() {
+        return dim1 * dim1 * dim1;
+    }
+}
+class Cylinder extends ThreeDObject {
+
+    public Cylinder(double radius, double height) {
+        super(radius, height, 0);
+    }
+public double wholesurfacearea() {
+        return 2 * Math.PI * dim1 * (dim1 + dim2);
+    }
+public double volume() {
+        return Math.PI * dim1 * dim1 * dim2;
+    }
+}
+class Cone extends ThreeDObject {
+
+    public Cone(double radius, double height) {
+        super(radius, height, 0);
+    }
+public double wholesurfacearea() {
+        double slantHeight = Math.sqrt(dim1 * dim1 + dim2 * dim2);
+        return Math.PI * dim1 * (dim1 + slantHeight);
+    }
+    public double volume() {
+        return (Math.PI * dim1 * dim1 * dim2) / 3;
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Box box = new Box(3, 4, 5);
+        Cube cube = new Cube(3);
+        Cylinder cylinder = new Cylinder(3, 5);
+        Cone cone = new Cone(3, 5);
+
+        System.out.println("Box Surface Area: " + box.wholesurfacearea());
+        System.out.println("Box Volume: " + box.volume());
+
+        System.out.println("Cube Surface Area: " + cube.wholesurfacearea());
+        System.out.println("Cube Volume: " + cube.volume());
+
+        System.out.println("Cylinder Surface Area: " + cylinder.wholesurfacearea());
+        System.out.println("Cylinder Volume: " + cylinder.volume());
+
+        System.out.println("Cone Surface Area: " + cone.wholesurfacearea());
+        System.out.println("Cone Volume: " + cone.volume());
+    }
+}
+
+
+
+
+
+interface Department {
+    String depName = "";
+    String depHead = "";
+
+    void getDepartmentData();
+    void printDepartmentData();
+}
+class Hostel {
+    protected String hostelName;
+    protected String hostelLocation;
+    protected int noOfRooms;
+
+    public void getHostelData(String hostelName, String hostelLocation, int noOfRooms) {
+        this.hostelName = hostelName;
+        this.hostelLocation = hostelLocation;
+        this.noOfRooms = noOfRooms;
+    }
+
+    public void printHostelData() {
+        System.out.println("Hostel Name: " + hostelName);
+        System.out.println("Hostel Location: " + hostelLocation);
+        System.out.println("Number of Rooms: " + noOfRooms);
+    }
+}
+class Student extends Hostel implements Department {
+    private String studentName;
+    private String regNo;
+    private String electiveSubject;
+    private double avgMarks;
+
+    private String departmentName;
+    private String departmentHead;
+public void getData(String studentName, String regNo, String electiveSubject, double avgMarks,
+                        String hostelName, String hostelLocation, int noOfRooms,
+                        String departmentName, String departmentHead) {
+
+        this.studentName = studentName;
+        this.regNo = regNo;
+        this.electiveSubject = electiveSubject;
+        this.avgMarks = avgMarks;
+
+        getHostelData(hostelName, hostelLocation, noOfRooms);
+        this.departmentName = departmentName;
+        this.departmentHead = departmentHead;
+    }
+
+    public void printData() {
+        System.out.println("Student Name: " + studentName);
+        System.out.println("Registration Number: " + regNo);
+        System.out.println("Elective Subject: " + electiveSubject);
+        System.out.println("Average Marks: " + avgMarks);
+        printHostelData();
+        printDepartmentData();
+    }
+public void getDepartmentData() {
+       }
+
+    public void printDepartmentData() {
+        System.out.println("Department Name: " + departmentName);
+        System.out.println("Department Head: " + departmentHead);
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Student student = new Student();
+
+        // Simulated data input
+        student.getData(
+            "Alice Smith", "REG123", "Artificial Intelligence", 88.5,
+            "Sunrise Hostel", "Block B", 50,
+            "Computer Science", "Dr. John Doe"
+        ); 
+
+        System.out.println("---- Student Information ----");
+        student.printData();
+    }
+}
